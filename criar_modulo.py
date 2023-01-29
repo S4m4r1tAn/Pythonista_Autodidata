@@ -1,7 +1,7 @@
-def processamento_de_audio(aumentando_volume=None, diminuindo_volume=None):
-    if aumentando_volume != None:
+def processamento_de_audio(aumentar_volume=None, diminuir_volume=None):
+    if aumentar_volume != None:
         print(f'Aumentando o volume.')
-    elif diminuindo_volume != None:
+    elif diminuir_volume != None:
         print(f'Dminuindo o volume.')
     else:
         print(f'DESLIGANDO!')
