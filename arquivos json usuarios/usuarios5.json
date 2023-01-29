@@ -1,0 +1,29 @@
+[
+    {
+        "nome": "Carol",
+        "telefone": "47-99224-8852",
+        "permissões": [
+            "basico",
+            "intermediário",
+            "administrador"
+        ],
+        "admin": true,
+        "plano": {
+            "nome": "basico",
+            "preco": "R$20,00"
+        }
+    },
+    {
+        "nome": "Douglas",
+        "telefone": "47-99224-8852",
+        "permissões": [
+            "basico",
+            "intermediário"
+        ],
+        "admin": false,
+        "plano": {
+            "nome": "pro",
+            "preco": "R$50,00"
+        }
+    }
+]

@@ -1,0 +1,3 @@
+apple, orange, banana, grape, watermelon
+
+verde, amarelo, azul, branco, cinza
