@@ -1,6 +1,7 @@
 # Nosso 1º API - FLASK
 # FLASK & FLASK RESTFUL
 from flask import Flask, jsonify, request
+from pprint import pprint
 
 app = Flask(__name__)
 postagens = [
