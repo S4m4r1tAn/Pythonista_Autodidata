@@ -42,4 +42,14 @@ def alterar_postagem(indice):
     postagens[indice].update(postagem_alterada)
     return jsonify(postagens[indice],200)
 
+# Excluir uma postagem - DELETE - http://localhost:5000/postagem/1
+@app.route('/postagem/<int:indice>', methods=['DELETE'])
+def excluir_postagem(indice):
+    try:
+        if postagens[indice] is not None:
+            del postagens[indice]
+            return jsonify(f'Foi excluida a postagem {postagens[indice]}', 200)
+    except:
+        return jsonify('Nao foi possivel encontrar a postagem para exclusao', 404)
+
 app.run(port=5000, host='localhost', debug=True)
