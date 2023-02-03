@@ -34,7 +34,7 @@ def nova_postagem():
     postagens.append(postagem)
     return jsonify(postagem, 200)
 
-# Alterar uma postagem existente - PUT
+# Alterar uma postagem existente - PUT http://localhost:5000/postagem/1
 @app.route('/postagem/<int:indice>', methods=['PUT'])
 def alterar_postagem(indice):
     postagem_alterada = request.get_json()
