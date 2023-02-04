@@ -57,6 +57,7 @@ def excluir_musica(indice):
             return jsonify(f'Foi excluida a musica {musicas[indice]}', 200)
     except:
         return jsonify('Nao foi possivel encontrar a musica para exclusao', 404)
+    
 ### 4. Quais recursos serão disponibilizados pela API?
 ### Informações sobre canções
 ### 5. Quais verbos http serão disponibilizados?
