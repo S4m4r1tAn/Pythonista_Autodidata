@@ -34,25 +34,25 @@ def obter_musicas():
 def obter_musicas_por_indice(indice):
     return jsonify(musicas[indice])
 
-# Criar uma nova postagem - POST http://localhost:5000/cancao
+# Criar uma nova postagem - POST http://localhost:5000/musicas
 @app.route('/musicas', methods=['POST'])
 def nova_musica():
     musica = request.get_json()
     musicas.append(musica)
     return jsonify(musica, 200)
 
-# Alterar uma postagem existente - PUT http://localhost:5000/cancao/1
+# Alterar uma postagem existente - PUT http://localhost:5000/musicas/1
 @app.route('/musica/<int:indice>', methods=['PUT'])
 def alterar_musica(indice):
     musica_alterada = request.get_json()
     musicas[indice].update(musica_alterada)
     return jsonify(musicas[indice],200)
 
-# Excluir uma postagem - DELETE - http://localhost:5000/cancao/1
+# Excluir uma postagem - DELETE - http://localhost:5000/musicas/1
 @app.route('/musica/<int:indice>', methods=['DELETE'])
 def excluir_musica(indice):
     try:
-        if musica[indice] is not None:
+        if musicas[indice] is not None:
             del musicas[indice]
             return jsonify(f'Foi excluida a musica {musicas[indice]}', 200)
     except:
