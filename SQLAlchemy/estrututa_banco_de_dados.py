@@ -38,3 +38,4 @@ with app.app_context():
     autor = Autor(nome='S4m4r1t4N', email='emerson@devaprender.com', senha='123456', admin= True)
     db.session.add(autor)
     db.session.commit()
+
