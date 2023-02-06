@@ -40,6 +40,7 @@ def inicializar_banco():
                 senha='123456$', admin=True)
     db.session.add(autor)
     db.session.commit()
+    
 if __name__ == "__main__":
     inicializar_banco()
     

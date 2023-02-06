@@ -19,8 +19,16 @@ def nova_postagem():
 
     return jsonify(postagem, 200)
 
+""" @app.route('/postagem', methods=['POST']) #SUGESTAO DO chatGPT
+def nova_postagem():
+    dados = request.get_json().dump()
+    postagem = Postagem(titulo=dados['titulo'], conteudo=dados['conteudo'], id_autor=dados['id_autor'])
+    db.session.add(postagem)
+    db.session.commit()
+    return jsonify({'mensagem': 'Postagem adicionada com sucesso!'}) """
+
 # Alterar uma postagem existente - PUT https://localhost:5000/postagem/1
-@app.route('/postagem/<int:indice>',methods=['PUT'])
+@app.route('/postagem/<int:indice>', methods=['PUT'])
 def alterar_postagem(indice):
     postagem_alterada = request.get_json()
     postagens[indice].update(postagem_alterada)
@@ -36,7 +44,6 @@ def excluir_postagem(indice):
     except:
         return jsonify('Não foi possível encontrar a postagem para exclusão',404)
 
-
 @app.route('/autores')
 def obter_autores():
     autores = Autor.query.all()
@@ -50,19 +57,19 @@ def obter_autores():
         
     return jsonify({'autores': lista_de_autores})
 
-@app.route('/autores/<int:id_autor>',methods=['GET'])
+@app.route('/autores/<int:id_autor>', methods=['GET'])
 def obter_autor_por_id(id_autor):
     pass
 
-@app.route('/autores',methods=['POST'])
+@app.route('/autores', methods=['POST'])
 def novo_autor():
     pass
 
-@app.route('/autores/<int:id_autor>',methods=['PUT'])
+@app.route('/autores/<int:id_autor>', methods=['PUT'])
 def alterar_autor(id_autor):
     pass
 
-@app.route('/autores/<int:id_autor>',methods=['DELETE'])
+@app.route('/autores/<int:id_autor>', methods=['DELETE'])
 def excluir_autor(id_autor):
     pass
 
