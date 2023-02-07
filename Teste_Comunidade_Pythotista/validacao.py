@@ -10,6 +10,8 @@ while True:
         print('Favor digitar apenas numeros.')
         continue
     
-    resultado = valor * 5.07
-    print(f'O resultado do calculo eh {resultado}!')
+    resultado = valor * 3.141592643
+
+#Veja mais sobre "Número pi (π)" em: https://brasilescola.uol.com.br/matematica/numero-pi.htm
+    print(f'O resultado do calculo eh {resultado:.4f}!')
     break
