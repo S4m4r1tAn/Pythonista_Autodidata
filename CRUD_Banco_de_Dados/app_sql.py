@@ -1,51 +1,116 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, make_response
 from estrutura_banco_de_dados import Autor, Postagem, app, db
+import json
+import jwt
+from datetime import datetime, timedelta
+from functools import wraps
 
 # Rota padrão - GET https://localhost:5000
+
+def token_obrigatorio(f):
+    @wraps(f)
+    def decoreted(*args, **kwargs):
+        token = None
+        # Verificar se um token foi enviado
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+        if not token:
+            return jsonify({'mensagem': 'Token nao foi incluido!'},401)
+        # Se temos acesso, validar acesso consultando o Banco de Dados
+        try:
+            resultado = jwt.decode(token, app.config['SECRET_KEY'])
+            autor = Autor.query.filter_by(id_autor=resultado['id_autor']).first()
+        except:
+            return jsonify({'mensagem': 'Token Invalido!'},401)
+        return f(autor, *args, **kwargs)
+    return decoreted
+
+@app.route('/login')
+def login():
+    auth = request.authorization
+    if not auth or not auth.username or not auth.password:
+        return make_response('Login Invalido', 401, {'WWW-Authenticate': 'Basic realm="Login Obrigatorio"'})
+    usuario = Autor.query.filter_by(nome=auth.username).first()
+    if not usuario:
+        return make_response('Login Invalido', 401, {'WWW-Authenticate': 'Basic realm="Login Obrigatorio"'})
+    if auth.password == usuario.senha:
+        token = jwt.encode({'id_autor': usuario.id_autor, 'exp': datetime.utcnow(
+            ) + timedelta(minutes=30)}, app.config['SECRET_KEY'])
+        return jsonify({'token': token.decode('UTC-8')})    
+    return make_response('Login Invalido', 401, {'WWW-Authenticate': 'Basic realm="Login Obrigatorio"'})
+
+
 @app.route('/')
-def obter_postagens():
-    return jsonify(postagens)
+def obter_postagens(autor):
+    postagens = Postagem.query.all()
+    
+    list_postagens = []
+    for postagem in postagens:
+        postagem_atual = {}
+        postagem_atual['titulo'] = postageme.titulo
+        postagem_atual['id_autor'] = postagem.id_autor
+        list_postagens.append(postagem_atual)
+    return jsonify({'postagens': list_postagens})
 
 # Obter postagem por id - GET https://localhost:5000/postagem/1
-@app.route('/postagem/<int:indice>', methods=['GET'])
-def obter_postagem_por_indice(indice):
-    return jsonify(postagens[indice])
+@app.route('/postagem/<int:id_postagem>', methods=['GET'])
+@token_obrigatorio
+def obter_postagem_por_indice(autor, id_postagem):
+    postagem = Postagem.query.filter_by(id_postagem=id_postagem).first()
+    postagem_atual = {}
+    try:
+        postagem_atual['titulo'] = postagem.titulo
+    except:
+        pass
+    postagem_atual['id_autor'] = postagem.id_autor
+
+    return jsonify({'postagens': postagem_atual})
 
 # Criar uma nova postagem - POST https://localhost:5000/postagem
 @app.route('/postagem',methods=['POST'])
-def nova_postagem():
-    postagem = request.get_json()
-    postagens.append(postagem)
+def nova_postagem(autor):
+    nova_postagem = request.get_json()
+    postagem = Postagem(
+        titulo=nova_postagem['titulo'], id_autor=nova_postagem['id_autor'])
 
-    return jsonify(postagem, 200)
-
-""" @app.route('/postagem', methods=['POST']) #SUGESTAO DO chatGPT
-def nova_postagem():
-    dados = request.get_json().dump()
-    postagem = Postagem(titulo=dados['titulo'], conteudo=dados['conteudo'], id_autor=dados['id_autor'])
     db.session.add(postagem)
     db.session.commit()
-    return jsonify({'mensagem': 'Postagem adicionada com sucesso!'}) """
+
+    return jsonify({'mensagem': 'Postagem criada com sucesso'})
 
 # Alterar uma postagem existente - PUT https://localhost:5000/postagem/1
-@app.route('/postagem/<int:indice>', methods=['PUT'])
-def alterar_postagem(indice):
+@app.route('/postagem/<int:id_postagem>', methods=['PUT'])
+@token_obrigatorio
+def alterar_postagem(autor, id_postagem):
     postagem_alterada = request.get_json()
-    postagens[indice].update(postagem_alterada)
+    postagem = Postagem.query.filter_by(id_postagem=id_postagem).first()
+    try:
+        postagem.titulo = postagem_alterada['titulo']
+    except:
+        pass
+    try:
+        postagem.id_autor = postagem_alterada['id_autor']
+    except:
+        pass
 
-    return jsonify(postagens[indice], 200)
+    db.session.commit()
+    return jsonify({'mensagem': 'Postagem alterada com sucessso'})
 
 # Excluir uma postagem - DELETE - https://localhost:5000/postagem/1
-def excluir_postagem(indice):
-    try:
-        if postagens[indice] is not None:
-            del postagens[indice]
-            return jsonify(f'Foi excluído a postagem {postagens[indice]}',200)
-    except:
-        return jsonify('Não foi possível encontrar a postagem para exclusão',404)
+@app.route('/postagem/<int:id_postagem>', methods=['DELETE'])
+@token_obrigatorio
+def excluir_postagem(autor, id_postagem):
+    postagem_a_ser_excluida = Postagem.query.filter_by(
+        id_postagem=id_postagem).first()
+    if not postagem_a_ser_excluida:
+        return jsonify({'mensagem': 'Não foi encontrado uma postagem com este id'})
+    db.session.delete(postagem_a_ser_excluida)
+    db.session.commit()
+
+    return jsonify({'mensagem': 'Postagem excluída com sucesso!'})
 
 @app.route('/autores')
-def obter_autores():
+def obter_autores(autor):
     autores = Autor.query.all()
     lista_de_autores = []
     for autor in autores:
