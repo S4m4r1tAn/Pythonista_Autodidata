@@ -33,7 +33,7 @@ class Autor(db.Model):
 
 def inicializar_banco():
     with app.app_context():
-    # Executar o comando para criar o banco de dados
+        # Executar o comando para criar o banco de dados
         db.drop_all()
         db.create_all()
         # Criar usuários adminstradores

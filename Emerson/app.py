@@ -1,11 +1,10 @@
 from flask import Flask, jsonify, request, make_response
 from estrutura_banco_de_dados import Autor, Postagem, app, db
-import  json
+import json
 import jwt
 from datetime import datetime, timedelta
 from functools import wraps
 import os
-
 # Rota padrão - GET https://localhost:5000
 # Comentário
 
@@ -205,5 +204,5 @@ def excluir_autor(autor, id_autor):
 
     return jsonify({'mensagem': 'Autor excluído com sucesso!'})
 
-if __name__ == __main__:
+if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))
