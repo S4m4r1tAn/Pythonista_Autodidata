@@ -9,9 +9,8 @@ for i in range(2):
 # MAP
 
 def aprovar_aluno(nome):
-    frequencia = 'sim' or 'nao' #or False and 'nao'
-    #frequencia = False or 'nao'
-    if frequencia == 'sim':
+    frequencia = 'sim' or 'nao' #or False and 'nao' 
+    if frequencia == 'sim': #frequencia = False or 'nao'
         return nome + ' APROVADO(a)'
     if frequencia == 'nao':
         return nome + ' REPROVADO(a)'
