@@ -23,4 +23,16 @@ nomes = ['Larissa', 'Rafael', 'Marcus', 'John']
 print([aprovar_pessoa(nome) for nome in nomes if nome != 'Rafael'])
 
 # Valores numericos
-pprint([i for i in range(19+1) if i not in (1, 5, 15, 19)])
+def eh_numero_par(numero):
+    valor = numero % 2
+    if valor == 0:
+        return True
+    else:
+        return False
+print([i for i in range(20) if i not in (1, 5, 15, 19)])
+print([i for i in range(20) if eh_numero_par(i)])
+# A condicionavel eh flexivel
+# [expressao (condicional if) for membro in iteravel]
+participantes = ['Larissa', 'Rafael', 'Marcus', 'John']
+ganhadores = ['Marcus', 'John']
+print([i + ' GANHADOR' if i in ganhadores else i + ' NAO SELECIONADOS' for i in participantes])
