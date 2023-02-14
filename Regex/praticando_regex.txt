@@ -1,1 +1,161 @@
-Ola :), sou uma frase simples
+Ola :), sou uma frase simples # Digitar a frase que precise encontrar
+
+dev123com
+developer 123
+dev = 123
+dev = 1234
+dev = 1337
+dev = 9000
+
+asd.
+112.
+1@#.
+12.234
+
+18.335.346
+23.235.756
+56.863.623
+
+# Agora quero todas as palavras com 3 caracteres no total, 
+que iniciam tanto com o ou com a, tanto faz o caracter
+do meio, e finalizam com a letra a.
+opa
+outra
+ata
+ola
+tola
+puxar
+
+# Vamos imaginar em um caso de um numero de celular, ou qualquer 
+outro padrao onde voce quer confirmar uma combinacao valida, com
+o numero a seguir:
+(23)99255-1231 # [(]\d\d[)]\d\d\d\d\d[-]\d\d\d\d
+
+# E o numero a seguir? Caso voce nao saiba, o numero 55 abaixo, 
+representa o numero identificador do pais. E neste caso 55 representa
+o numero o numero indentificador do Brasil. E vamos pensar agora
+que o seu, programa estara apenas cadastrando clientes nacionais.
+Entao so sera aceito numeros iniciando com 55, alem de estar dentro
+de um padrao numero valido. Como poderiamos fazer isso?
+55(23)99200-8755
+45(23)99200-8755
+33(23)99200-8755
+
+hey encontrar
+tey encontrar
+vei encontrar
+way pular
+
+(55)1234-1235 encontrar
+(62)1234-1235 encontrar
+(47)1234-1235 pular
+(89)1234-1235 pular
+
+# Em alguns casos voce tera que validar valores dentro de uma faixa, 
+mas para evitar de digitar eles todos individualmente:
+# Quero por exemplo todos os numero de 5 a 9. [5-9]
+123456789
+# Quero as letras de t a z  # [t-z]
+abcdefghijklmnopqrstuvwxyz
+
+# Uma sacada para os casos em que estara recebendo letras e numeros 
+sem acento eh o uso do \w que representa todas as letras de a a z sejam 
+elas maiusculas ou minusculas e tambem todos os numero de 1 a 0.
+
+abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789#$"&@
+
+# Encontrando repeticoes de um padrao mais rapidamente
+45-8888-88888       # \d{5} ou \d{4,5}
+45-5555-88888       # 8{5} -> quando quer buscar um digito especifico
+
+# Vamos imaginar que estamos criando um filtro de girias
+aceitaveis dentro de nossa aplicacao. Sendo  que as unicas
+combinacoes aceitaveis seriam: 'zoeira', 'zueira', 'zuera' ou seja, 
+apenas quando a palavra eh iniciada com uma das 3 possiveis
+combinacoes de 3 primeiras letras: zoe, zue.
+zoeira encontrar           # [zueo]{3}
+zueira encontrar
+zuera encontrar
+suera pular
+
+# Outra situacao onde voce simplesmente quer validar que uma
+quantidade especifica de caracteres sejam usados em suas
+aplicacoes, voce poderia combinar o poder de generalismo do . com
+o poder da repeticao que as chaves de passam.
+# Vamos imaginar que uma senha secreta precisa ter no minimo
+8 caracteres, independente dos caracteres que foram digitados
+dentro do campo:        # .{8}
+12314567
+asdfgdfh
+*&@%$&$%
+G4D%&264
+
+# Uma ou mais reeticoes
+# Para todos caracteres e metacaracteres, podemos usar + para 
+encotrar combinacoes somente quando houver, no minimo uma ou
+mais ocorrencias, exemplo: -> d+ # ira encontrar ocorrencias com 1 ou mais
+deev encontrar                   # letras d nesse caso.
+ddev encontrar
+dddeva encontrar
+devi encontrar
+eve pular
+
+# Podemos tambem encontrar combinacoes onde eh iniciado de alguma foram
+e o restante pode ser qualquer combinacao de caracteres usando o -> dev.*
+devi encontrar          # dev.*
+devo encontrar
+devu encontrar
+deva encontrar
+
+# Em alguns casos, voce estara lidando com caracteres opcionais, que podem
+ser encontrados atraves do metacaracter "?"(interrogacao) que representa
+que um caracter eh opcional. Ele te permite representar tanto zero ou um 
+do caracter ou grupo precedente. Ex: dados? ira encontrar tanto 'dado' quanto
+'dados'. # Porem caso voce precise encontrar o ponto de interrogacao em si, 
+por se tratar de um metacaracter, voce deve escapar ele usando a barra
+invertida -> \?
+# Vamos pensar nas frases abaixo:   #\?
+5 arquivos baixados
+1 arquivo  baixado
+3 arquivos baixados
+
+# Espaco em branco.
+# Em diversos cenarios onde voce esta lidando com entrada de dados de usuario
+ou em qualquer aplicacao usada no mundo real, voce tera que lidar com espaco
+em suas aplicacoes, isso porque o espaco em branco nos ajuda a deixar textos
+mais legiveis, separando uma palavra da outra, porem se nao tiver ciente deste
+espaco em branco em suas expressoes regulares, elas podem simplesmente nao
+funcionar.
+* espaco
+* tab (\t)
+* nova linha (\n)
+* botao enter (\r)
+* Para lidar com qualquer tipo de espaco em branco (\s)
+1. ola          # \d\.\s+ola
+2.  ola
+3.      ola
+4.ola
+
+-> Declarando inicio em fim
+# Para que voce crie em regex o mais preciso possivel, podemos usar os 
+delimitadores de inicio e fim do que deve ser encontrado.
+# O que eh possivel atraves dos ^(chapauezinho) e $(cifrao do dolar).
+Hora de codar           # ^hora de codar$
+Ta na hora de codar
+Ja chegou a hora de codar
+
+-> Capturando grupos
+# Qualquer padrao encontrado dentro de "parenteses"() serao colocados em
+um grupo que podera ser utilizado posteriormente, isso pode ser util para
+extrair numeros de telefone ou emails por exemplo.
+imagem_s121fa.jpg           # (imagem.+\.)(jpg)
+imagem_FFDD.jpg
+relatorio_agosto.pdf
+# Capturar um sub-grupo     # ((imagem.+\.)(jpg))
+
+amanda@hotmail.com          # (\w+)(@\w+\.)(com\.br|com)
+jeff@outlook.com
+carol@gmail.com.br
+
+(33)99200-1885              # ([(]\d{2}[)])(\d{5})([-]\d}4) ou
+                            # (([(]\d{2}[)])(\d{5})([-]\d}4)) para extrair o grupo inteiro
