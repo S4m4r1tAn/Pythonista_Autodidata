@@ -37,25 +37,25 @@ o numero o numero indentificador do Brasil. E vamos pensar agora
 que o seu, programa estara apenas cadastrando clientes nacionais.
 Entao so sera aceito numeros iniciando com 55, alem de estar dentro
 de um padrao numero valido. Como poderiamos fazer isso?
-55(23)99200-8755
+55(23)99200-8755 # [5][5][(]\d\d[)]\d\d\d\d\d[-]\d\d\d\d
 45(23)99200-8755
 33(23)99200-8755
 
-hey encontrar
+hey encontrar 	# [^w] exceto a letra W
 tey encontrar
 vei encontrar
 way pular
 
-(55)1234-1235 encontrar
+(55)1234-1235 encontrar		# [(][^5][^5][)] exceto o numero prefixo de pais 55
 (62)1234-1235 encontrar
 (47)1234-1235 pular
 (89)1234-1235 pular
 
 # Em alguns casos voce tera que validar valores dentro de uma faixa, 
 mas para evitar de digitar eles todos individualmente:
-# Quero por exemplo todos os numero de 5 a 9. [5-9]
-123456789
-# Quero as letras de t a z  # [t-z]
+# Quero por exemplo todos os numero de 5 a 9. 
+123456789 	# [5-9] encontra somente os numero de 5 a 9 por exemplo
+# Quero as letras de t a z  # [t-z] ou de t a z no caso de letras
 abcdefghijklmnopqrstuvwxyz
 
 # Uma sacada para os casos em que estara recebendo letras e numeros 
@@ -114,7 +114,7 @@ do caracter ou grupo precedente. Ex: dados? ira encontrar tanto 'dado' quanto
 'dados'. # Porem caso voce precise encontrar o ponto de interrogacao em si, 
 por se tratar de um metacaracter, voce deve escapar ele usando a barra
 invertida -> \?
-# Vamos pensar nas frases abaixo:   #\?
+# Vamos pensar nas frases abaixo:   #?
 5 arquivos baixados
 1 arquivo  baixado
 3 arquivos baixados
