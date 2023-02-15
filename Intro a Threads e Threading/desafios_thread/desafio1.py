@@ -22,7 +22,7 @@ def baixar_fotos(site):
     print(f'\033[1;33mFOTOS BAIXADAS COM SUCESSO!\033[m')                                                                                                                  
         
 nova_thread = threading.Thread(
-    target=extrair_fotos_do_site, args=('https://github.com/S4m4r1tAn/S4m4r1t4n',), daemon=True)
+    target=extrair_fotos_do_site, args=('https://www.facebook.com/groups/mestrepythonista',), daemon=True)
 nova_thread.start()
-baixar_fotos('https://github.com/S4m4r1tAn/S4m4r1t4n')
+baixar_fotos('https://www.facebook.com/groups/mestrepythonista',)
 nova_thread.join()
