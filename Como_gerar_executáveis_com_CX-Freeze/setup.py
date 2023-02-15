@@ -3,9 +3,9 @@ import os
 from cx_Freeze import setup, Executable
 
 # Definir o que deve ser incluido na pasta final
-arquivos = ['hackeranonimous.ico']
+arquivos = ['hacker.ico', 'musica/']
 # Saida de aquivos
-configuracao = Executable(script='app.py',icon='hackeranonimous'.ico)
+configuracao = Executable(script='app.py',icon='hacker'.ico)
 
 # Configurar o cx-freeze (detalhes do programa)
 
