@@ -13,7 +13,7 @@ setup(
     name = 'Automatizacao de Login',
     version = '1.0',
     description = 'Este programa automatiza o login',
-    author = 'S4m4r1t4N'
+    author = 'S4m4r1t4N',
     options = {'build_exe': {'include_files': arquivos }}, 
     executables = [configuracao]
 )
