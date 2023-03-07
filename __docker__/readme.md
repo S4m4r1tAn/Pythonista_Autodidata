@@ -1,0 +1,1 @@
+Nos estamos tentando criar um docker file para teste.
